@@ -3,7 +3,7 @@
 /*/{Protheus.doc} delfunc
     Rotina para deletar colaboradores no relogio ControlID a partir do Protheus (Rescisao).
     Integra com o endpoint /remove_users.fcgi
-    @author RSanthos (Junie)
+    @author RSanthos
     @since 19/03/2026
 /*/
 user function delfunc()
@@ -20,6 +20,7 @@ user function delfunc()
     local cNome     := "JOAO DA SILVA" // Apenas para log/exibicao
     
     // 1. Realizar Login para obter a sessao
+    // JSON Enviado: {"login":"admin","password":"admin"}
     oRest:setPath("/login.fcgi")
     cBody := '{"login":"admin","password":"admin"}'
     oRest:setPostRequest(cBody)
@@ -43,6 +44,7 @@ user function delfunc()
         
         cBody := oMainJson:ToJson()
         
+        // JSON Enviado: {"users":[12345678901]}
         // 3. Enviar para o relogio
         // Usando mode=671 conforme documentacao para suportar CPF
         oRest:setPath("/remove_users.fcgi?session=" + cSession + "&mode=671")

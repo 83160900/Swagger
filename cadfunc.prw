@@ -23,6 +23,7 @@ user function cadFunc()
     local cPis      := "12345678901"
     
     // 1. Realizar Login para obter a sessao
+    // JSON Enviado: {"login":"admin","password":"admin"}
     oRest:setPath("/login.fcgi")
     cBody := '{"login":"admin","password":"admin"}'
     oRest:setPostRequest(cBody)
@@ -57,6 +58,7 @@ user function cadFunc()
         
         cBody := oMainJson:ToJson()
         
+        // JSON Enviado: {"users":[{"name":"JOAO DA SILVA","registration":123,"cpf":12345678901}]}
         // 3. Enviar para o relogio
         // Usando mode=671 conforme documentacao para suportar CPF
         oRest:setPath("/add_users.fcgi?session=" + cSession + "&mode=671")

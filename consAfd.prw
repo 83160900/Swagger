@@ -13,6 +13,7 @@ user function consAfd()
     local cResponse := ""
     
     // 1. Realizar Login para obter a sessao
+    // JSON Enviado: {"login":"admin","password":"admin"}
     oRest:setPath("/login.fcgi")
     cBody := '{"login":"admin","password":"admin"}'
     oRest:setPostRequest(cBody)
@@ -31,6 +32,7 @@ user function consAfd()
         // 2. Solicitar o AFD (Exemplo: a partir de uma data ou NSR)
         oRest:setPath("/get_afd.fcgi?session=" + cSession + "&mode=671")
         
+        // JSON Enviado: {"initial_date":{"day":18,"month":3,"year":2026}}
         // Exemplo: Buscar a partir de 18/03/2026
         cBody := '{"initial_date":{"day":18,"month":3,"year":2026}}'
         oRest:setPostRequest(cBody)
