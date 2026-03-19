@@ -3,7 +3,7 @@
 /*/{Protheus.doc} u_cadFunc
     Rotina para cadastrar colaboradores no relogio ControlID a partir do Protheus.
     Integra com o endpoint /add_users.fcgi
-    @author RSanthos (Junie)
+    @author RSanthos
     @since 19/03/2026
 /*/
 user function cadFunc()
