@@ -138,10 +138,16 @@ paths:
     post:
       tags: [Coleta de Dados (AFD)]
       summary: Obter AFD (Arquivo de Fonte de Dados)
+      description: |
+        Obtém o arquivo AFD do REP. Suporta o formato da Portaria 671 se o parâmetro `mode=671` for enviado.
       parameters:
         - name: session
           in: query
           required: true
+          schema: {type: string}
+        - name: mode
+          in: query
+          description: Use 671 para o formato da Portaria 671.
           schema: {type: string}
       requestBody:
         content:
@@ -149,10 +155,18 @@ paths:
             schema:
               type: object
               properties:
-                nsh: {type: integer, description: "NSH inicial"}
+                initial_date:
+                  type: object
+                  properties:
+                    day: {type: integer}
+                    month: {type: integer}
+                    year: {type: integer}
+                initial_nsr:
+                  type: integer
+                  description: "Retorna as marcações a partir da NSR informada até o final."
       responses:
         '200':
-          description: OK
+          description: OK - Retorna o conteúdo do arquivo AFD.
 
   /get_system_information.fcgi:
     post:
