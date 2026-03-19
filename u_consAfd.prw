@@ -2,7 +2,7 @@
 
 /*/{Protheus.doc} u_consAfd
     Exemplo de consumo do AFD (Arquivo de Fonte de Dados) do relogio ControlID via AdvPL.
-    @author Junie
+    @author RSanthos
     @since 19/03/2026
 /*/
 user function consAfd()
