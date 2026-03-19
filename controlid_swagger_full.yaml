@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  title: API Relógio de Ponto ControlID (iDClass)
+  description: |
+    Documentação completa dos endpoints encontrados no equipamento ControlID iDClass.
+    Esta API utiliza predominantemente o método **POST** e requer um token de sessão na query string para a maioria das chamadas.
+  version: 1.0.0
+servers:
+  - url: https://{device_ip}
+    variables:
+      device_ip:
+        default: 192.168.0.129
+        description: Endereço IP do relógio de ponto iDClass.
+
+tags:
+  - name: Autenticação e Sessão
+  - name: Gerenciamento de Usuários
+  - name: Biometria e Facial
+  - name: Coleta de Dados (AFD)
+  - name: Configuração do Sistema
+
+paths:
+  /login.fcgi:
+    post:
+      tags: [Autenticação e Sessão]
+      summary: Login
+      description: Inicia uma sessão no equipamento.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login: {type: string, default: admin}
+                password: {type: string, default: admin}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session: {type: string}
+
+  /logout.fcgi:
+    post:
+      tags: [Autenticação e Sessão]
+      summary: Logout
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+
+  /session_is_valid.fcgi:
+    post:
+      tags: [Autenticação e Sessão]
+      summary: Validar Sessão
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+
+  /add_users.fcgi:
+    post:
+      tags: [Gerenciamento de Usuários]
+      summary: Adicionar Usuários
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+
+  /load_users.fcgi:
+    post:
+      tags: [Gerenciamento de Usuários]
+      summary: Listar Usuários
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+
+  /remove_users.fcgi:
+    post:
+      tags: [Gerenciamento de Usuários]
+      summary: Remover Usuários
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                where: {type: object}
+      responses:
+        '200':
+          description: OK
+
+  /get_afd.fcgi:
+    post:
+      tags: [Coleta de Dados (AFD)]
+      summary: Obter AFD (Arquivo de Fonte de Dados)
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nsh: {type: integer, description: "NSH inicial"}
+      responses:
+        '200':
+          description: OK
+
+  /get_system_information.fcgi:
+    post:
+      tags: [Configuração do Sistema]
+      summary: Informações do Sistema
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+
+  /set_system_date_time.fcgi:
+    post:
+      tags: [Configuração do Sistema]
+      summary: Ajustar Data e Hora
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day: {type: integer}
+                month: {type: integer}
+                year: {type: integer}
+                hour: {type: integer}
+                minute: {type: integer}
+                second: {type: integer}
+      responses:
+        '200':
+          description: OK
+
+  /remote_enroll.fcgi:
+    post:
+      tags: [Biometria e Facial]
+      summary: Cadastro Remoto (Biometria/Facial)
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id: {type: integer}
+                type: {type: string, enum: [biometry, facial]}
+      responses:
+        '200':
+          description: OK
+
+  /get_system_configuration.fcgi:
+    post:
+      tags: [Configuração do Sistema]
+      summary: Obter Configurações do Sistema
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id: {type: integer}
+        name: {type: string}
+        registration: {type: string}
+        password: {type: string}
+        salt: {type: string}
+        privilege: {type: string, enum: [user, admin]}

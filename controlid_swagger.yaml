@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  title: API Relógio de Ponto ControlID (iDClass)
+  description: Documentação gerada para as APIs de integração com os relógios de ponto da ControlID.
+  version: 1.0.0
+servers:
+  - url: https://{device_ip}
+    variables:
+      device_ip:
+        default: 192.168.0.129
+        description: Endereço IP do relógio de ponto iDClass.
+
+paths:
+  /login.fcgi:
+    post:
+      summary: Realizar Login
+      description: Inicia uma sessão no equipamento.
+      tags:
+        - Sessão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  default: admin
+                password:
+                  type: string
+                  default: admin
+      responses:
+        '200':
+          description: Login realizado com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session:
+                    type: string
+                    description: Token de sessão para as próximas chamadas.
+
+  /logout.fcgi:
+    post:
+      summary: Realizar Logout
+      tags:
+        - Sessão
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Logout realizado com sucesso.
+
+  /session_is_valid.fcgi:
+    post:
+      summary: Verificar se a sessão é válida
+      tags:
+        - Sessão
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retorna se a sessão está ativa ou não.
+
+  /add_users.fcgi:
+    post:
+      summary: Adicionar Usuários
+      description: Cadastra um ou mais usuários no equipamento.
+      tags:
+        - Usuários
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Usuários adicionados com sucesso.
+
+  /load_users.fcgi:
+    post:
+      summary: Listar Usuários
+      tags:
+        - Usuários
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de usuários cadastrados.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+
+  /get_afd.fcgi:
+    post:
+      summary: Obter registros AFD
+      description: Retorna os registros do Arquivo de Fonte de Dados (AFD).
+      tags:
+        - Registros (AFD)
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nsh:
+                  type: integer
+                  description: Número Sequencial de Hardware inicial.
+      responses:
+        '200':
+          description: Arquivo AFD retornado com sucesso.
+
+  /get_system_information.fcgi:
+    post:
+      summary: Informações do Sistema
+      tags:
+        - Sistema
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Informações gerais do equipamento.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        registration:
+          type: string
+        password:
+          type: string
+        salt:
+          type: string
