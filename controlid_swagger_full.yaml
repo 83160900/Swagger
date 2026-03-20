@@ -240,6 +240,117 @@ paths:
         '200':
           description: OK
 
+  /get_about.fcgi:
+    post:
+      tags: [Configuração do Sistema]
+      summary: Informações do REP
+      description: Obtém informações do REP como MAC, Número de Série e Versão do Firmware.
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mac: {type: string}
+                  nSerie: {type: string}
+                  versionFW: {type: integer}
+                  versionMRP: {type: integer}
+                  isFacial: {type: boolean}
+
+  /count_users.fcgi:
+    post:
+      tags: [Gerenciamento de Usuários]
+      summary: Contagem de Usuários
+      description: Retorna a quantidade total de usuários cadastrados no equipamento.
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count: {type: integer}
+
+  /update_users.fcgi:
+    post:
+      tags: [Gerenciamento de Usuários]
+      summary: Atualizar Usuários
+      description: Atualiza os dados de usuários existentes. Suporta o modo 671 para CPF.
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+        - name: mode
+          in: query
+          schema: {type: string}
+          description: Use 671 para suporte a CPF.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+
+  /remove_admins.fcgi:
+    post:
+      tags: [Gerenciamento de Usuários]
+      summary: Remover Administradores
+      description: Remove todos os privilégios de administrador de todos os usuários.
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+
+  /get_system_date_time.fcgi:
+    post:
+      tags: [Configuração do Sistema]
+      summary: Obter Data e Hora
+      description: Retorna a data e hora atual configurada no equipamento.
+      parameters:
+        - name: session
+          in: query
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  day: {type: integer}
+                  month: {type: integer}
+                  year: {type: integer}
+                  hour: {type: integer}
+                  minute: {type: integer}
+                  second: {type: integer}
+
 components:
   schemas:
     User:
