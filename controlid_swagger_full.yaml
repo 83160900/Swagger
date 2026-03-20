@@ -51,7 +51,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -64,7 +67,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -77,7 +83,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       requestBody:
         content:
           application/json:
@@ -100,7 +109,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -122,7 +134,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       requestBody:
         content:
           application/json:
@@ -144,7 +159,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
         - name: mode
           in: query
           description: Use 671 para o formato da Portaria 671.
@@ -191,7 +209,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -204,7 +225,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       requestBody:
         content:
           application/json:
@@ -229,7 +253,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       requestBody:
         content:
           application/json:
@@ -250,7 +277,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -264,7 +294,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -288,7 +321,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -308,7 +344,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
         - name: mode
           in: query
           schema: {type: string}
@@ -336,7 +375,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
@@ -350,7 +392,10 @@ paths:
         - name: session
           in: query
           required: true
-          schema: {type: string}
+          schema:
+            type: string
+            default: "12345678"
+          description: "Token de sessão obtido no login. Use o valor padrão para testar o mock."
       responses:
         '200':
           description: OK
