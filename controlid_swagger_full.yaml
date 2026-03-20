@@ -201,6 +201,41 @@ paths:
                 0001431283210220240721020780935041
                 0001431293210220240736021249967238
 
+  /process_afd_to_msa:
+    post:
+      tags: [Coleta de Dados (AFD)]
+      summary: Processar AFD para Formato MSA
+      description: |
+        Endpoint simulado que recebe o conteúdo bruto do AFD e retorna o JSON estruturado para a tabela Protheus MSA_CONTROL_MARCAC.
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |
+              0000000001108613254000944000000000000TB COMERCIO DE PRESENTES S.A                                                                                                                          000240009300046202102202420032024210320241158
+              0001431213210220240624013302422937
+              0001431223210220240635012328872451
+      responses:
+        '200':
+          description: JSON formatado para Protheus
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                marcas:
+                  - codRelogioExtChave: " "
+                    codNsr: 143121
+                    codPisMsa: "013302422937"
+                    datMarcacAces: "2024-02-21"
+                    numHorarMarcacAces: "06:24"
+                    codRep: "00024000930004620"
+                    codUnidExtChave: "T1D MG 01"
+                    codUsuarExtChave: "T1D MG 01 003651"
+                    numVersLayout: 3
+                    inscrEmp: "08613254000944"
+
   /get_system_information.fcgi:
     post:
       tags: [Configuração do Sistema]
